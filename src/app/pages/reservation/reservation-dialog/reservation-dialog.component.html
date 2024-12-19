@@ -1,0 +1,37 @@
+<mat-dialog-content>
+    <mat-toolbar><span>Reservation Info</span></mat-toolbar>
+</mat-dialog-content>
+
+<div class="example-container">
+
+    <mat-form-field>
+        <input matInput placeholder="Customer Name" [(ngModel)]="reservation.customerName" #customerName="ngModel" required>
+        <div *ngIf="customerName.errors?.['required'] && customerName.touched"><small class="invalid">Is Required</small></div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Select a Date Range:</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start Date" [(ngModel)]="reservation.checkInDate" #checkInDate="ngModel" required>
+            <input matEndDate placeholder="End Date" [(ngModel)]="reservation.checkOutDate" #checkOutDate="ngModel" required>
+        </mat-date-range-input>
+        <mat-hint>DD/MM/YYYY - DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <div *ngIf="(checkInDate.errors?.['required'] || checkOutDate.errors?.['required']) && (checkInDate.touched || checkOutDate.touched) "><small class="invalid">Is Required</small></div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Room</mat-label>
+        <mat-select [(ngModel)]="reservation.room" #room="ngModel" required>
+            @for (room of rooms; track $index) {
+                <mat-option [value]="room">{{room.number}}</mat-option>
+            }
+        </mat-select>
+        <div *ngIf="room.errors?.['required'] && room.touched"><small class="invalid">Is Required</small></div>
+    </mat-form-field>
+
+    <button mat-button [disabled]="customerName.invalid || checkInDate.invalid || checkOutDate.invalid || room.invalid" (click)="operate()">Done</button>
+    <button mat-button color="warn" (click)="close()">Cancel</button>
+
+</div>

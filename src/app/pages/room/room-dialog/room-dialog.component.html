@@ -1,0 +1,30 @@
+<mat-dialog-content>
+    <mat-toolbar><span>Room Info</span></mat-toolbar>
+</mat-dialog-content>
+
+<div class="example-container">
+
+    <mat-form-field>
+        <input matInput placeholder="Number" [(ngModel)]="room.number" #number="ngModel" required type="number">
+        <div *ngIf="number.errors?.['required'] && number.touched"><small class="invalid">Is Required</small></div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select [(ngModel)]="room.type" #type="ngModel" required>
+            <mat-option value="Individual">Individual</mat-option>
+            <mat-option value="Doble">Doble</mat-option>
+            <mat-option value="Suite">Suite</mat-option>
+        </mat-select>
+        <div *ngIf="type.errors?.['required'] && type.touched"><small class="invalid">Is Required</small></div>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Price" [(ngModel)]="room.price" #price="ngModel" required type="number">
+        <div *ngIf="price.errors?.['required'] && price.touched"><small class="invalid">Is Required</small></div>
+    </mat-form-field>
+
+    <button mat-button [disabled]="number.invalid || type.invalid || price.invalid" (click)="operate()">Done</button>
+    <button mat-button color="warn" (click)="close()">Cancel</button>
+
+</div>
